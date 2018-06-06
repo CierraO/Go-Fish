@@ -1,0 +1,115 @@
+import random
+import sys
+import time
+
+# List of the positions of all cards
+# The values are grouped by suit, in the order they are listed in cardSuit
+wholeDeck = []
+cardValue = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"]
+cardSuit = ["Hearts", "Spades", "Diamonds", "Clubs"]
+
+# This makes each letter show up one at a time
+def delayPrint(text):
+    for c in text:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(0.035)
+    print("\n")
+
+# This tells the player all of the commands they can use
+def helpPlayer():
+    delayPrint("Type 'hand' to see all the cards in your hand.")
+    delayPrint("Type 'out' to see all the cards in your 'out' pile.")
+    playerInput()
+
+# This allows the player to type and use commands
+def playerInput():
+    command = input()
+    command = command.lower()
+    
+    if command == "help":
+        helpPlayer()
+    elif command == "hand":
+        printCards("p1")
+        playerInput()
+    elif command == "out":
+        printCards("p1Out")
+        playerInput()
+    else:
+        delayPrint("'" + command + "' is not a valid command. Please try again. Type 'help' for a list of commands.")
+        playerInput()
+
+# Draws one card from the deck for one of the players
+def drawSingleCard(player):
+    x = 0
+    for i in wholeDeck:
+        if i == "deck":
+            x+=1
+    drawnCard = random.randint(0,x)
+    counter = 0
+    for i in wholeDeck:
+        if i == "deck" and counter == drawnCard:
+            print("This is not done :(")
+
+# Draws any number of cards from the deck for one of the players
+def drawCards(player, numOfCards):
+    for x in range(0, numOfCards):
+        drawSingleCard(player)
+    if player == "p1":
+        printCards("p1")
+    makeMatch(player)
+
+# Tells the player what cards they have
+def printCards(deck):
+    i = 0
+    print("\n")
+    delayPrint("The current cards in your pile are:")
+    for card in wholeDeck:
+        if wholeDeck[i] == deck:
+            delayPrint(str(cardValue[i%13]) + " of " + str(cardSuit[i//13]))
+        i+=1
+    print("\n")
+
+# Checks if one of the players has made a match
+def makeMatch(player):
+    # Checks if a player has a match within their hand
+    cValue = 0
+    for card in wholeDeck:
+        if card == player:
+            ncValue = 0
+            for nestedCard in wholeDeck:
+                if nestedCard == player:
+                    if cValue%13 == ncValue%13 and cValue//13 != ncValue//13:
+                        wholeDeck[cValue] = player + "Out"
+                        wholeDeck[ncValue] = player + "Out"
+                        delayPrint(player + " made a match with " + str(cardValue[cValue%13]) + " of " + str(cardSuit[cValue//130]) + " and " + str(cardValue[ncValue%13]) + " of " + str(cardSuit[ncValue//13]) + ". These cards have been placed out of the game.")
+                ncValue+=1
+        cValue+=1
+    # Checks if a player has a match between a card in their hand and cards out of the game
+    cValue = 0
+    for card in wholeDeck:
+        if card == player:
+            ncValue = 0
+            for nestedCard in wholeDeck:
+                if nestedCard == player + "Out":
+                    if cValue%13 == ncValue%13 and cValue//13 != ncValue//13:
+                        wholeDeck[cValue] = player + "Out"
+                        delayPrint(player + " made a match with " + str(cardValue[cValue%13]) + " of " + str(cardSuit[cValue//130]) + " and cards in their out-of-the-game pile. This card has been placed out of the game.")
+                ncValue+=1
+        cValue+=1
+
+# This function is a work in progress
+# This will allow the player to ask if the other player has a card of any value
+def askCard():
+    print("")
+            
+###############################################################################   
+
+# Fills the deck with all 52 cards
+for i in range(0,52):
+    wholeDeck.append("deck")
+
+drawCards("p1", 5)
+drawCards("p2", 5)
+delayPrint("Type 'help' for a list of commands.")
+playerInput()
