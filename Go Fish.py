@@ -1,3 +1,8 @@
+## @file:   Go Fish.py
+#  @author: Cierra
+#  @date:   5/17/18
+#
+
 import random
 import sys
 import time
