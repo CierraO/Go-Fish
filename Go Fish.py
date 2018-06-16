@@ -50,11 +50,15 @@ def drawSingleCard(player):
     for i in wholeDeck:
         if i == "deck":
             x+=1
-    drawnCard = random.randint(0,x)
+    drawnCard = random.randint(0,x-1)
     counter = 0
+    x = 0
     for i in wholeDeck:
         if i == "deck" and counter == drawnCard:
-            print("This is not done :(")
+            x+=1
+            wholeDeck[counter] = player
+        counter+=1
+            
 
 # Draws any number of cards from the deck for one of the players
 def drawCards(player, numOfCards):
