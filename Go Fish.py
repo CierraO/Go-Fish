@@ -21,11 +21,28 @@ def delayPrint(text):
         time.sleep(0.035)
     print("\n")
 
+## @COMMENT:
+#  1) Is it appropriate to have playerInput() inside of helpPlayer()?
+#  To remain consistent with the if statement below, playerInput()
+#  should be called after helpPlayer()
+#
+
 # This tells the player all of the commands they can use
 def helpPlayer():
     delayPrint("Type 'hand' to see all the cards in your hand.")
     delayPrint("Type 'out' to see all the cards in your 'out' pile.")
     playerInput()
+
+## @COMMENT:
+#  2) "help" case is inconsistent with other cases.
+#  playerInput() should appear after helpPlayer() instead
+#  of inside helpPlayer.
+#  3) The if-statement structure needs an "end" game case 
+#  where playerInput() is not called to allow the game to end
+#  4) What other options should the player have in this menu?
+#   How does the player ask the computer "Do you have any Kings?"
+#   "Do you have any 10's?", etc.
+# 
 
 # This allows the player to type and use commands
 def playerInput():
@@ -41,8 +58,22 @@ def playerInput():
         printCards("p1Out")
         playerInput()
     else:
+        drawSingleCard("p1")
         delayPrint("'" + command + "' is not a valid command. Please try again. Type 'help' for a list of commands.")
         playerInput()
+## @COMMENT:
+#  5) In the comment section for this function,
+#  explain how you are drawing a single card
+#  6) Re-evaluate how you are drawing a single card.
+#  What are the differences in how a card is drawn
+#  (compare with your code):
+#    for i in wholeDeck:
+#        if i == "deck":
+#            if x == drawnCard:
+#                wholeDeck[counter] = player
+#            x+=1
+#        counter+=1
+#
 
 # Draws one card from the deck for one of the players
 def drawSingleCard(player):
@@ -53,6 +84,7 @@ def drawSingleCard(player):
     drawnCard = random.randint(0,x-1)
     counter = 0
     x = 0
+    # 6) Compare with code above
     for i in wholeDeck:
         if i == "deck" and counter == drawnCard:
             x+=1
@@ -68,6 +100,11 @@ def drawCards(player, numOfCards):
         printCards("p1")
     makeMatch(player)
 
+## @COMMENT:
+#  7) Is the print("\n") at the end of this function necessary?
+#  The delayPrint() function already includes this at the end.
+#
+
 # Tells the player what cards they have
 def printCards(deck):
     i = 0
@@ -78,6 +115,13 @@ def printCards(deck):
             delayPrint(str(cardValue[i%13]) + " of " + str(cardSuit[i//13]))
         i+=1
     print("\n")
+
+## @COMMENT:
+#  8) The requirement for a player to score points in this game is to have 4
+#  cards of the same 'value' in their hand. Remove cards from a players hand
+#  to the out of game pile only when they have 4 of the same 'value'.
+#  9) You should not be checking for a match with cards outside of the game.
+# 
 
 # Checks if one of the players has made a match
 def makeMatch(player):
