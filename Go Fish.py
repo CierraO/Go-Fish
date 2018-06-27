@@ -51,12 +51,11 @@ def playerInput():
         drawSingleCard("p1")
         delayPrint("'" + command + "' is not a valid command. Please try again. Type 'help' for a list of commands.")
         playerInput()
-## @COMMENT:
-#  5) In the comment section for this function,
-#  explain how you are drawing a single card
-#
 
-# Draws one card from the deck for one of the players
+# Draws one card from the deck for one of the players by counting the number
+# of deck cards, choosing a random number from 0 to the amount of deck cards,
+# locating that deck card in the whole deck, and assigning it to the
+# player's hand
 def drawSingleCard(player):
     x = 0
     for i in wholeDeck:
