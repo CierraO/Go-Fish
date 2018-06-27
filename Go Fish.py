@@ -21,17 +21,10 @@ def delayPrint(text):
         time.sleep(0.035)
     print("\n")
 
-## @COMMENT:
-#  1) Is it appropriate to have playerInput() inside of helpPlayer()?
-#  To remain consistent with the if statement below, playerInput()
-#  should be called after helpPlayer()
-#
-
 # This tells the player all of the commands they can use
 def helpPlayer():
     delayPrint("Type 'hand' to see all the cards in your hand.")
     delayPrint("Type 'out' to see all the cards in your 'out' pile.")
-    playerInput()
 
 ## @COMMENT:
 #  2) "help" case is inconsistent with other cases.
@@ -51,6 +44,7 @@ def playerInput():
     
     if command == "help":
         helpPlayer()
+        playerInput()
     elif command == "hand":
         printCards("p1")
         playerInput()
