@@ -26,12 +26,7 @@ def delayPrint(text):
 def helpPlayer():
     delayPrint("Type 'hand' to see all the cards in your hand.")
     delayPrint("Type 'out' to see all the cards in your 'out' pile.")
-
-## @COMMENT:
-#  4) What other options should the player have in this menu?
-#   How does the player ask the computer "Do you have any Kings?"
-#   "Do you have any 10's?", etc.
-# 
+    delayPrint("Type 'ask' to ask the other player if they have a specific card.")
 
 # This allows the player to type and use commands
 def playerInput():
@@ -49,6 +44,9 @@ def playerInput():
     elif command == "out":
         printCards("p1Out")
         playerInput()
+    elif command == "ask":
+        delayPrint("This does not work yet.")
+        askCard()
     else:
         drawSingleCard("p1")
         delayPrint("'" + command + "' is not a valid command. Please try again. Type 'help' for a list of commands.")
