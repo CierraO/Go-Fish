@@ -7,6 +7,7 @@ import random
 import sys
 import time
 
+end = False
 # List of the positions of all cards
 # The values are grouped by suit, in the order they are listed in cardSuit
 wholeDeck = []
@@ -27,11 +28,6 @@ def helpPlayer():
     delayPrint("Type 'out' to see all the cards in your 'out' pile.")
 
 ## @COMMENT:
-#  2) "help" case is inconsistent with other cases.
-#  playerInput() should appear after helpPlayer() instead
-#  of inside helpPlayer.
-#  3) The if-statement structure needs an "end" game case 
-#  where playerInput() is not called to allow the game to end
 #  4) What other options should the player have in this menu?
 #   How does the player ask the computer "Do you have any Kings?"
 #   "Do you have any 10's?", etc.
@@ -41,8 +37,10 @@ def helpPlayer():
 def playerInput():
     command = input()
     command = command.lower()
-    
-    if command == "help":
+
+    if end:
+        delayPrint("The game is over.")
+    elif command == "help":
         helpPlayer()
         playerInput()
     elif command == "hand":
