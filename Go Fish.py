@@ -54,15 +54,6 @@ def playerInput():
 ## @COMMENT:
 #  5) In the comment section for this function,
 #  explain how you are drawing a single card
-#  6) Re-evaluate how you are drawing a single card.
-#  What are the differences in how a card is drawn
-#  (compare with your code):
-#    for i in wholeDeck:
-#        if i == "deck":
-#            if x == drawnCard:
-#                wholeDeck[counter] = player
-#            x+=1
-#        counter+=1
 #
 
 # Draws one card from the deck for one of the players
@@ -74,11 +65,11 @@ def drawSingleCard(player):
     drawnCard = random.randint(0,x-1)
     counter = 0
     x = 0
-    # 6) Compare with code above
     for i in wholeDeck:
-        if i == "deck" and counter == drawnCard:
+        if i == "deck":
+            if x == drawnCard:
+                wholeDeck[counter] = player
             x+=1
-            wholeDeck[counter] = player
         counter+=1
             
 
