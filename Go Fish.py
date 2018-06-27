@@ -80,11 +80,6 @@ def drawCards(player, numOfCards):
         printCards("p1")
     makeMatch(player)
 
-## @COMMENT:
-#  7) Is the print("\n") at the end of this function necessary?
-#  The delayPrint() function already includes this at the end.
-#
-
 # Tells the player what cards they have
 def printCards(deck):
     i = 0
@@ -94,7 +89,6 @@ def printCards(deck):
         if wholeDeck[i] == deck:
             delayPrint(str(cardValue[i%13]) + " of " + str(cardSuit[i//13]))
         i+=1
-    print("\n")
 
 ## @COMMENT:
 #  8) The requirement for a player to score points in this game is to have 4
