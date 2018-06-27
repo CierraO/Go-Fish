@@ -90,38 +90,29 @@ def printCards(deck):
             delayPrint(str(cardValue[i%13]) + " of " + str(cardSuit[i//13]))
         i+=1
 
-## @COMMENT:
-#  8) The requirement for a player to score points in this game is to have 4
-#  cards of the same 'value' in their hand. Remove cards from a players hand
-#  to the out of game pile only when they have 4 of the same 'value'.
-#  9) You should not be checking for a match with cards outside of the game.
-# 
-
-# Checks if one of the players has made a match
+# Checks if one of the players has made a match of four cards
+# This entire function is a mess and will eventually be redone
 def makeMatch(player):
-    # Checks if a player has a match within their hand
     cValue = 0
     for card in wholeDeck:
         if card == player:
             ncValue = 0
             for nestedCard in wholeDeck:
                 if nestedCard == player:
-                    if cValue%13 == ncValue%13 and cValue//13 != ncValue//13:
-                        wholeDeck[cValue] = player + "Out"
-                        wholeDeck[ncValue] = player + "Out"
-                        delayPrint(player + " made a match with " + str(cardValue[cValue%13]) + " of " + str(cardSuit[cValue//130]) + " and " + str(cardValue[ncValue%13]) + " of " + str(cardSuit[ncValue//13]) + ". These cards have been placed out of the game.")
-                ncValue+=1
-        cValue+=1
-    # Checks if a player has a match between a card in their hand and cards out of the game
-    cValue = 0
-    for card in wholeDeck:
-        if card == player:
-            ncValue = 0
-            for nestedCard in wholeDeck:
-                if nestedCard == player + "Out":
-                    if cValue%13 == ncValue%13 and cValue//13 != ncValue//13:
-                        wholeDeck[cValue] = player + "Out"
-                        delayPrint(player + " made a match with " + str(cardValue[cValue%13]) + " of " + str(cardSuit[cValue//130]) + " and cards in their out-of-the-game pile. This card has been placed out of the game.")
+                    nncValue = 0
+                    for nnCard in wholeDeck:
+                        if nnCard == player:
+                            nnncValue = 0
+                            for nnnCard in wholeDeck:
+                                if nnnCard == player:
+                                    if cValue%13 == ncValue%13 and ncValue%13 == nncValue%13 and nncValue%13 == nnncValue%13 and cValue//13 != ncValue//13 and cValue//13 != nncValue//13 and cValue//13 != nnncValue//13 and ncValue//13 != nncValue//13 and ncValue//13 != nnncValue//13 and nncValue//13 != nnncValue//13:
+                                        wholeDeck[cValue] = player + "Out"
+                                        wholeDeck[ncValue] = player + "Out"
+                                        wholeDeck[nncValue] = player + "Out"
+                                        wholeDeck[nnncValue] = player + "Out"
+                                        delayPrint(player + " made a match with " + str(cardValue[cValue%13]) + " of " + str(cardSuit[cValue//13]) + ", " + str(cardValue[ncValue%13]) + " of " + str(cardSuit[ncValue//13]) + ", " + str(cardValue[nncValue%13]) + " of " + str(cardSuit[nncValue//13]) + ", and " + str(cardValue[nnncValue%13]) + " of " + str(cardSuit[nnncValue//13]) + ". These cards have been placed out of the game.")
+                                nnncValue+=1
+                        nncValue+=1
                 ncValue+=1
         cValue+=1
 
