@@ -7,6 +7,7 @@ import random
 import sys
 import time
 
+end = False
 # List of the positions of all cards
 # The values are grouped by suit, in the order they are listed in cardSuit
 wholeDeck = []
@@ -25,26 +26,36 @@ def delayPrint(text):
 def helpPlayer():
     delayPrint("Type 'hand' to see all the cards in your hand.")
     delayPrint("Type 'out' to see all the cards in your 'out' pile.")
-    playerInput()
+    delayPrint("Type 'ask' to ask the other player if they have a specific card.")
 
 # This allows the player to type and use commands
 def playerInput():
     command = input()
     command = command.lower()
-    
-    if command == "help":
+
+    if end:
+        delayPrint("The game is over.")
+    elif command == "help":
         helpPlayer()
+        playerInput()
     elif command == "hand":
         printCards("p1")
         playerInput()
     elif command == "out":
         printCards("p1Out")
         playerInput()
+    elif command == "ask":
+        delayPrint("This does not work yet.")
+        askCard()
     else:
+        drawSingleCard("p1")
         delayPrint("'" + command + "' is not a valid command. Please try again. Type 'help' for a list of commands.")
         playerInput()
 
-# Draws one card from the deck for one of the players
+# Draws one card from the deck for one of the players by counting the number
+# of deck cards, choosing a random number from 0 to the amount of deck cards,
+# locating that deck card in the whole deck, and assigning it to the
+# player's hand
 def drawSingleCard(player):
     x = 0
     for i in wholeDeck:
@@ -54,9 +65,10 @@ def drawSingleCard(player):
     counter = 0
     x = 0
     for i in wholeDeck:
-        if i == "deck" and counter == drawnCard:
+        if i == "deck":
+            if x == drawnCard:
+                wholeDeck[counter] = player
             x+=1
-            wholeDeck[counter] = player
         counter+=1
             
 
@@ -77,33 +89,30 @@ def printCards(deck):
         if wholeDeck[i] == deck:
             delayPrint(str(cardValue[i%13]) + " of " + str(cardSuit[i//13]))
         i+=1
-    print("\n")
 
-# Checks if one of the players has made a match
+# Checks if one of the players has made a match of four cards
+# This entire function is a mess and will eventually be redone
 def makeMatch(player):
-    # Checks if a player has a match within their hand
     cValue = 0
     for card in wholeDeck:
         if card == player:
             ncValue = 0
             for nestedCard in wholeDeck:
                 if nestedCard == player:
-                    if cValue%13 == ncValue%13 and cValue//13 != ncValue//13:
-                        wholeDeck[cValue] = player + "Out"
-                        wholeDeck[ncValue] = player + "Out"
-                        delayPrint(player + " made a match with " + str(cardValue[cValue%13]) + " of " + str(cardSuit[cValue//130]) + " and " + str(cardValue[ncValue%13]) + " of " + str(cardSuit[ncValue//13]) + ". These cards have been placed out of the game.")
-                ncValue+=1
-        cValue+=1
-    # Checks if a player has a match between a card in their hand and cards out of the game
-    cValue = 0
-    for card in wholeDeck:
-        if card == player:
-            ncValue = 0
-            for nestedCard in wholeDeck:
-                if nestedCard == player + "Out":
-                    if cValue%13 == ncValue%13 and cValue//13 != ncValue//13:
-                        wholeDeck[cValue] = player + "Out"
-                        delayPrint(player + " made a match with " + str(cardValue[cValue%13]) + " of " + str(cardSuit[cValue//130]) + " and cards in their out-of-the-game pile. This card has been placed out of the game.")
+                    nncValue = 0
+                    for nnCard in wholeDeck:
+                        if nnCard == player:
+                            nnncValue = 0
+                            for nnnCard in wholeDeck:
+                                if nnnCard == player:
+                                    if cValue%13 == ncValue%13 and ncValue%13 == nncValue%13 and nncValue%13 == nnncValue%13 and cValue//13 != ncValue//13 and cValue//13 != nncValue//13 and cValue//13 != nnncValue//13 and ncValue//13 != nncValue//13 and ncValue//13 != nnncValue//13 and nncValue//13 != nnncValue//13:
+                                        wholeDeck[cValue] = player + "Out"
+                                        wholeDeck[ncValue] = player + "Out"
+                                        wholeDeck[nncValue] = player + "Out"
+                                        wholeDeck[nnncValue] = player + "Out"
+                                        delayPrint(player + " made a match with " + str(cardValue[cValue%13]) + " of " + str(cardSuit[cValue//13]) + ", " + str(cardValue[ncValue%13]) + " of " + str(cardSuit[ncValue//13]) + ", " + str(cardValue[nncValue%13]) + " of " + str(cardSuit[nncValue//13]) + ", and " + str(cardValue[nnncValue%13]) + " of " + str(cardSuit[nnncValue//13]) + ". These cards have been placed out of the game.")
+                                nnncValue+=1
+                        nncValue+=1
                 ncValue+=1
         cValue+=1
 
