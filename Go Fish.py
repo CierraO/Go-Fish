@@ -118,6 +118,18 @@ def makeMatch(player):
                 ncValue+=1
         cValue+=1
 
+def hasValue(player, value):
+    counter = 0
+    cardsOfValue = 0
+    for card in wholeDeck:
+        if card == player and cardValue[counter%13] == cardValue[value]:
+            cardsOfValue+=1
+        counter+=1
+    if cardsOfValue == 0:
+        return False
+    else:
+        return True
+
 # This function is a work in progress
 # This will allow the player to ask if the other player has a card of any value
 def askCard():
@@ -126,6 +138,9 @@ def askCard():
         askedValue = int(input())
         if askedValue < 1 or askedValue > 13:
             delayPrint("That is not a card value. Please try again.")
+            askCard()
+        elif hasValue("p1", askedValue-1) == False:
+            delayPrint("You do not have any cards with this value. Please try again.")
             askCard()
         else:
             askedValue = askedValue - 1
