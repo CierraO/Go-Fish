@@ -25,8 +25,8 @@ def delayPrint(text):
 # This tells the player all of the commands they can use
 def helpPlayer():
     delayPrint("Type 'hand' to see all the cards in your hand.")
-    delayPrint("Type 'out' to see all the cards in your 'out' pile.")
-    delayPrint("Type 'ask' to ask the other player if they have a specific card.")
+    delayPrint("Type 'removed' to see all the cards that have been removed from your hand.")
+    delayPrint("Type 'ask' to ask the other player if they have cards of a specific value.")
 
 # This allows the player to type and use commands
 def playerInput():
@@ -41,11 +41,10 @@ def playerInput():
     elif command == "hand":
         printCards("p1")
         playerInput()
-    elif command == "out":
+    elif command == "removed":
         printCards("p1Out")
         playerInput()
     elif command == "ask":
-        delayPrint("This does not work yet.")
         askCard()
     else:
         drawSingleCard("p1")
@@ -84,7 +83,10 @@ def drawCards(player, numOfCards):
 def printCards(deck):
     i = 0
     print("\n")
-    delayPrint("The current cards in your pile are:")
+    if deck == "p1":
+        delayPrint("The current cards in your hand are:")
+    elif deck == "p1Out":
+        delayPrint("The current cards removed from your hand are:")
     for card in wholeDeck:
         if wholeDeck[i] == deck:
             delayPrint(str(cardValue[i%13]) + " of " + str(cardSuit[i//13]))
@@ -119,7 +121,18 @@ def makeMatch(player):
 # This function is a work in progress
 # This will allow the player to ask if the other player has a card of any value
 def askCard():
-    print("")
+    delayPrint("Please type the card value you would like to ask for in its number form.")
+    try:
+        askedValue = int(input())
+        if askedValue < 1 or askedValue > 13:
+            delayPrint("That is not a card value. Please try again.")
+            askCard()
+        else:
+            askedValue = askedValue - 1
+            delayPrint("You have asked Player Two to give you their " + cardValue[askedValue] + "s.")
+    except ValueError:
+        delayPrint("That is not a valid number. Please try again.")
+        askCard()
             
 ###############################################################################   
 
@@ -129,5 +142,6 @@ for i in range(0,52):
 
 drawCards("p1", 5)
 drawCards("p2", 5)
+delayPrint("It is your turn to ask Player 2 if they have a card you need.")
 delayPrint("Type 'help' for a list of commands.")
 playerInput()
