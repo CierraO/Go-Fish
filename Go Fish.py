@@ -82,7 +82,6 @@ def drawCards(player, numOfCards):
 # Tells the player what cards they have
 def printCards(deck):
     i = 0
-    print("\n")
     if deck == "p1":
         delayPrint("The current cards in your hand are:")
     elif deck == "p1Out":
@@ -145,6 +144,18 @@ def askCard():
         else:
             askedValue = askedValue - 1
             delayPrint("You have asked Player Two to give you their " + cardValue[askedValue] + "s.")
+            if hasValue("p2", askedValue) == False:
+                delayPrint("Player 2 does not have any cards of this value. You go fish.")
+                drawCards("p1", 1)
+            else:
+                counter = 0
+                for card in wholeDeck:
+                    if card == "p2" and cardValue[counter%13] == cardValue[askedValue]:
+                        wholeDeck[counter] = "p1"
+                    counter+=1
+                delayPrint("You have been given all of Player 2's cards with this value.")
+                makeMatch("p1")
+                printCards("p1")
     except ValueError:
         delayPrint("That is not a valid number. Please try again.")
         askCard()
@@ -157,6 +168,7 @@ for i in range(0,52):
 
 drawCards("p1", 5)
 drawCards("p2", 5)
+printCards("p2")
 delayPrint("It is your turn to ask Player 2 if they have a card you need.")
 delayPrint("Type 'help' for a list of commands.")
 playerInput()
