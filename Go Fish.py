@@ -117,6 +117,7 @@ def makeMatch(player):
                 ncValue+=1
         cValue+=1
 
+# Checks if a player has any cards of a specific value in their hand
 def hasValue(player, value):
     counter = 0
     cardsOfValue = 0
