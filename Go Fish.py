@@ -129,8 +129,7 @@ def hasValue(player, value):
     else:
         return True
 
-# This function is a work in progress
-# This will allow the player to ask if the other player has a card of any value
+# This allows the player to ask if the other player has any cards of a specific value
 def askCard():
     delayPrint("Please type the card value you would like to ask for in its number form.")
     try:
