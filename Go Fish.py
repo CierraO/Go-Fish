@@ -46,6 +46,7 @@ def playerInput():
         playerInput()
     elif command == "ask":
         askCard()
+        playerInput()
     else:
         drawSingleCard("p1")
         delayPrint("'" + command + "' is not a valid command. Please try again. Type 'help' for a list of commands.")
@@ -92,7 +93,7 @@ def printCards(deck):
         i+=1
 
 # Checks if one of the players has made a match of four cards
-# This entire function is a mess and will eventually be redone
+# This entire function is a mess and will probably be redone
 def makeMatch(player):
     cValue = 0
     for card in wholeDeck:
@@ -138,13 +139,13 @@ def askCard():
         if askedValue < 1 or askedValue > 13:
             delayPrint("That is not a card value. Please try again.")
             askCard()
-        elif hasValue("p1", askedValue-1) == False:
+        elif not(hasValue("p1", askedValue-1)):
             delayPrint("You do not have any cards with this value. Please try again.")
             askCard()
         else:
             askedValue = askedValue - 1
             delayPrint("You have asked Player Two to give you their " + cardValue[askedValue] + "s.")
-            if hasValue("p2", askedValue) == False:
+            if not(hasValue("p2", askedValue)):
                 delayPrint("Player 2 does not have any cards of this value. You go fish.")
                 drawCards("p1", 1)
             else:
