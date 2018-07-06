@@ -46,6 +46,7 @@ def playerInput():
         playerInput()
     elif command == "ask":
         askCard()
+        askCardP2()
         playerInput()
     else:
         drawSingleCard("p1")
@@ -160,6 +161,33 @@ def askCard():
     except ValueError:
         delayPrint("That is not a valid number. Please try again.")
         askCard()
+
+def askCardP2():
+    x = 0
+    for i in wholeDeck:
+        if i == "p2":
+            x+=1
+    card = random.randint(0,x-1)
+    counter = 0
+    x = 0
+    for i in wholeDeck:
+        if i == "p2":
+            if x == card:
+                askedValue = counter%13
+                delayPrint("Player 2 is asking you to give them your " + cardValue[askedValue] + "s.")
+                if not(hasValue("p1", askedValue)):
+                    delayPrint("You do not have any cards of this value. Player 2 goes fish.")
+                    drawCards("p2", 1)
+                else:
+                    nCounter = 0
+                    for card in wholeDeck:
+                        if card == "p1" and cardValue[nCounter%13] == cardValue[askedValue]:
+                            wholeDeck[nCounter] = "p2"
+                        nCounter+=1
+                    delayPrint("Player 2 has been given all of your cards with this value.")
+                    makeMatch("p2")
+            x+=1
+        counter+=1
             
 ###############################################################################   
 
