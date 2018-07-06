@@ -178,6 +178,8 @@ def askCardP2():
                 if not(hasValue("p1", askedValue)):
                     delayPrint("You do not have any cards of this value. Player 2 goes fish.")
                     drawCards("p2", 1)
+                    delayPrint("It is your turn to ask Player 2 if they have a card you need.")
+                    delayPrint("Type 'help' for a list of commands.")
                 else:
                     nCounter = 0
                     for card in wholeDeck:
@@ -186,6 +188,9 @@ def askCardP2():
                         nCounter+=1
                     delayPrint("Player 2 has been given all of your cards with this value.")
                     makeMatch("p2")
+                    printCards("p1")
+                    delayPrint("It is your turn to ask Player 2 if they have a card you need.")
+                    delayPrint("Type 'help' for a list of commands.")
             x+=1
         counter+=1
             
