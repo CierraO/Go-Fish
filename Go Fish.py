@@ -46,6 +46,8 @@ def playerInput():
         playerInput()
     elif command == "ask":
         askCard()
+        askCardP2()
+        playerInput()
     else:
         drawSingleCard("p1")
         delayPrint("'" + command + "' is not a valid command. Please try again. Type 'help' for a list of commands.")
@@ -92,7 +94,7 @@ def printCards(deck):
         i+=1
 
 # Checks if one of the players has made a match of four cards
-# This entire function is a mess and will eventually be redone
+# This entire function is a mess and will probably be redone
 def makeMatch(player):
     cValue = 0
     for card in wholeDeck:
@@ -138,13 +140,13 @@ def askCard():
         if askedValue < 1 or askedValue > 13:
             delayPrint("That is not a card value. Please try again.")
             askCard()
-        elif hasValue("p1", askedValue-1) == False:
+        elif not(hasValue("p1", askedValue-1)):
             delayPrint("You do not have any cards with this value. Please try again.")
             askCard()
         else:
             askedValue = askedValue - 1
             delayPrint("You have asked Player Two to give you their " + cardValue[askedValue] + "s.")
-            if hasValue("p2", askedValue) == False:
+            if not(hasValue("p2", askedValue)):
                 delayPrint("Player 2 does not have any cards of this value. You go fish.")
                 drawCards("p1", 1)
             else:
@@ -159,6 +161,38 @@ def askCard():
     except ValueError:
         delayPrint("That is not a valid number. Please try again.")
         askCard()
+
+def askCardP2():
+    x = 0
+    for i in wholeDeck:
+        if i == "p2":
+            x+=1
+    card = random.randint(0,x-1)
+    counter = 0
+    x = 0
+    for i in wholeDeck:
+        if i == "p2":
+            if x == card:
+                askedValue = counter%13
+                delayPrint("Player 2 is asking you to give them your " + cardValue[askedValue] + "s.")
+                if not(hasValue("p1", askedValue)):
+                    delayPrint("You do not have any cards of this value. Player 2 goes fish.")
+                    drawCards("p2", 1)
+                    delayPrint("It is your turn to ask Player 2 if they have a card you need.")
+                    delayPrint("Type 'help' for a list of commands.")
+                else:
+                    nCounter = 0
+                    for card in wholeDeck:
+                        if card == "p1" and cardValue[nCounter%13] == cardValue[askedValue]:
+                            wholeDeck[nCounter] = "p2"
+                        nCounter+=1
+                    delayPrint("Player 2 has been given all of your cards with this value.")
+                    makeMatch("p2")
+                    printCards("p1")
+                    delayPrint("It is your turn to ask Player 2 if they have a card you need.")
+                    delayPrint("Type 'help' for a list of commands.")
+            x+=1
+        counter+=1
             
 ###############################################################################   
 
