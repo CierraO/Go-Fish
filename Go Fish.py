@@ -37,21 +37,16 @@ def playerInput():
         delayPrint("The game is over.")
     elif command == "help":
         helpPlayer()
-        playerInput()
     elif command == "hand":
         printCards("p1")
-        playerInput()
     elif command == "removed":
         printCards("p1Out")
-        playerInput()
     elif command == "ask":
         askCard()
         askCardP2()
-        playerInput()
     else:
         drawSingleCard("p1")
         delayPrint("'" + command + "' is not a valid command. Please try again. Type 'help' for a list of commands.")
-        playerInput()
 
 # Draws one card from the deck for one of the players by counting the number
 # of deck cards, choosing a random number from 0 to the amount of deck cards,
