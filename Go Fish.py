@@ -130,4 +130,6 @@ for i in range(0,52):
 drawCards("p1", 5)
 drawCards("p2", 5)
 delayPrint("Type 'help' for a list of commands.")
-playerInput()
+
+while not(end):
+    playerInput()
