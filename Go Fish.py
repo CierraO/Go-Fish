@@ -33,9 +33,7 @@ def playerInput():
     command = input()
     command = command.lower()
 
-    if end:
-        delayPrint("The game is over.")
-    elif command == "help":
+    if command == "help":
         helpPlayer()
     elif command == "hand":
         printCards("p1")
@@ -89,7 +87,7 @@ def printCards(deck):
         i+=1
 
 # Checks if one of the players has made a match of four cards
-# This entire function is a mess and will probably be redone
+# This entire function is a mess and might be redone
 def makeMatch(player):
     cValue = 0
     for card in wholeDeck:
@@ -109,6 +107,12 @@ def makeMatch(player):
                                         wholeDeck[nncValue] = player + "Out"
                                         wholeDeck[nnncValue] = player + "Out"
                                         delayPrint(player + " made a match with " + str(cardValue[cValue%13]) + " of " + str(cardSuit[cValue//13]) + ", " + str(cardValue[ncValue%13]) + " of " + str(cardSuit[ncValue//13]) + ", " + str(cardValue[nncValue%13]) + " of " + str(cardSuit[nncValue//13]) + ", and " + str(cardValue[nnncValue%13]) + " of " + str(cardSuit[nnncValue//13]) + ". These cards have been placed out of the game.")
+                                        num = 0
+                                        for nnnnCard in player:
+                                            num+=1
+                                        if num == 0:
+                                            end = True
+                                            delayPrint(player + " has run out of cards. The game is over.")
                                 nnncValue+=1
                         nncValue+=1
                 ncValue+=1
@@ -153,6 +157,8 @@ def askCard():
                 delayPrint("You have been given all of Player 2's cards with this value.")
                 makeMatch("p1")
                 printCards("p1")
+                delayPrint("Since Player 2 had the value you asked for, you get to ask again.")
+                askCard()
     except ValueError:
         delayPrint("That is not a valid number. Please try again.")
         askCard()
@@ -184,8 +190,8 @@ def askCardP2():
                     delayPrint("Player 2 has been given all of your cards with this value.")
                     makeMatch("p2")
                     printCards("p1")
-                    delayPrint("It is your turn to ask Player 2 if they have a card you need.")
-                    delayPrint("Type 'help' for a list of commands.")
+                    delayPrint("Since you had the value Player 2 asked for, they get to ask again.")
+                    askCardP2()
             x+=1
         counter+=1
             
@@ -202,3 +208,21 @@ delayPrint("Type 'help' for a list of commands.")
 
 while not(end):
     playerInput()
+
+p1Cards = 0
+p2Cards = 0
+
+for card in p1Out:
+    p1Cards+=1
+    
+for card in p2Out:
+    p2Cards+=1
+
+if p1Cards > p2Cards:
+    delayPrint("You have more matches than Player 2, so you win!")
+elif p1Cards < p2Cards:
+    delayPrint("Player 2 has more matches than you, so Player 2 wins.")
+else:
+    delayPrint("You and Player 2 both have the same number of matches, so it's a tie!")
+
+delayPrint("Thanks for playing!")
