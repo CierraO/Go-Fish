@@ -212,6 +212,7 @@ delayPrint("Type 'help' for a list of commands.")
 while not(end):
     playerInput()
 
+# Makes a variable for the number of cards that each player has made a match with
 p1Cards = 0
 p2Cards = 0
 
