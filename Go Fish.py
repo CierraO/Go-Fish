@@ -208,6 +208,7 @@ drawCards("p2", 5)
 delayPrint("It is your turn to ask Player 2 if they have a card you need.")
 delayPrint("Type 'help' for a list of commands.")
 
+# Makes the game continue while the game is not over
 while not(end):
     playerInput()
 
