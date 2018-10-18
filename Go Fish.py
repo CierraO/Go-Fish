@@ -202,6 +202,7 @@ def askCardP2():
 for i in range(0,52):
     wholeDeck.append("deck")
 
+# Gives the players five cards each
 drawCards("p1", 5)
 drawCards("p2", 5)
 delayPrint("It is your turn to ask Player 2 if they have a card you need.")
