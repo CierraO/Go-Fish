@@ -163,6 +163,7 @@ def askCard():
         delayPrint("That is not a valid number. Please try again.")
         askCard()
 
+# This allows Player 2 to ask if the player has any cards of a specific value
 def askCardP2():
     x = 0
     for i in wholeDeck:
@@ -201,23 +202,27 @@ def askCardP2():
 for i in range(0,52):
     wholeDeck.append("deck")
 
+# Gives the players five cards each
 drawCards("p1", 5)
 drawCards("p2", 5)
 delayPrint("It is your turn to ask Player 2 if they have a card you need.")
 delayPrint("Type 'help' for a list of commands.")
 
+# Makes the game continue while the game is not over
 while not(end):
     playerInput()
 
+# Makes a variable for the number of cards that each player has made a match with
 p1Cards = 0
 p2Cards = 0
 
+# Counts the number of cards that each player has made a match with
 for card in p1Out:
     p1Cards+=1
-    
 for card in p2Out:
     p2Cards+=1
 
+# Determines which player has made more matches
 if p1Cards > p2Cards:
     delayPrint("You have more matches than Player 2, so you win!")
 elif p1Cards < p2Cards:
