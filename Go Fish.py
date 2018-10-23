@@ -216,12 +216,13 @@ while not(end):
 p1Cards = 0
 p2Cards = 0
 
+# Counts the number of cards that each player has made a match with
 for card in p1Out:
     p1Cards+=1
-    
 for card in p2Out:
     p2Cards+=1
 
+# Determines which player has made more matches
 if p1Cards > p2Cards:
     delayPrint("You have more matches than Player 2, so you win!")
 elif p1Cards < p2Cards:
